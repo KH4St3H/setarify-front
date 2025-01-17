@@ -15,10 +15,12 @@ const { blackA, violet } = require("@radix-ui/colors");
  
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-	content: ["./src/App.js", "./src/components/auth.js"],
+	content: ["./src/**/*.{js,jsx,ts,tsx}", "./src/components/**/*.js", "./node_modules/flowbite/**/*.js"],
 	theme: {
 		extend: {
 		},
 	},
-	plugins: [],
+	plugins: [
+		require('flowbite/plugin')
+	],
 };

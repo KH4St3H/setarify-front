@@ -2,7 +2,7 @@ import React, { useState, useRef, createContext, useContext, useEffect } from 'r
 import { useQuery, useMutation, QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Layout, Search, Home, Library, PlayCircle, PauseCircle, SkipBack, SkipForward, Heart, Volume2, VolumeX } from 'lucide-react';
 import {api} from "../api"
-import { MusicCard as Card, SliderPrimitive} from './ui/ui';
+import { MusicCard as Card, SliderPrimitive} from './ui';
 
 import Slider from '@mui/material/Slider';
 
@@ -140,24 +140,24 @@ const SongList = ({ songs }) => {
   const { playSong, currentSong, isPlaying } = useContext(AudioContext);
 
   return (
-      <div className="grid grid-cols-3 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+    <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-5 gap-6">
       {songs.map((song) => (
-    <div>
-        <Card 
-          key={song.slug}
-          slug={song.slug}
-          title={song.title}
-          subtitle={song.artist.map(a => a.name).join(', ')}
-          isLiked={song.liked}
-          imageUrl={song.cover}
-          onPlay={() => playSong(song)}
-          isPlaying={isPlaying && currentSong.slug===song.slug}
-          onLike={api.likeSong}
-          onDislike={api.dislikeSong}
-          className={`p-4 hover:shadow-lg transition-shadow ${currentSong?.slug === song.slug ? 'bg-indigo-50' : ''}`}
-        >
-        </Card>
-    </div>
+        <div>
+          <Card
+            key={song.slug}
+            slug={song.slug}
+            title={song.title}
+            subtitle={song.artist.map(a => a.name).join(', ')}
+            isLiked={song.liked}
+            imageUrl={song.cover}
+            onPlay={() => playSong(song)}
+            isPlaying={isPlaying && currentSong.slug === song.slug}
+            onLike={api.likeSong}
+            onDislike={api.dislikeSong}
+            className={`p-4 hover:shadow-lg transition-shadow ${currentSong?.slug === song.slug ? 'bg-indigo-50' : ''}`}
+          >
+          </Card>
+        </div>
       ))}
     </div>
   );

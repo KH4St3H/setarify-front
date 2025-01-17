@@ -1,13 +1,14 @@
 import React, {useState} from 'react';
 import * as SliderPrimitive from '@radix-ui/react-slider';
 import { Heart, Play } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 // Card component with hover effects and play button
 const MusicCard = ({ 
   title=null, 
   subtitle=null, 
   imageUrl=null, 
-  isLiked = false,
+  isLiked=false,
   isPlaying=false,
   onPlay=null, 
   onLike=null,
@@ -16,7 +17,7 @@ const MusicCard = ({
 }) => {
   const [liked, setLiked] = useState(isLiked);
   return (
-    // <div className="max-w-xs bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
+    <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
       <div>
       <img
         src={imageUrl || "/api/placeholder/400/400"}
@@ -28,15 +29,16 @@ const MusicCard = ({
 
           <div>
           <h3 className="text-lg font-semibold text-gray-800 truncate">
-            {title}
+            <Link to={`/albums/${slug}`}>{title}</Link>
           </h3>
           <p className="text-sm text-gray-600 mt-1 truncate">{subtitle}</p>
           </div>
 
+          {onPlay !== null ?
           <div className="mt-4 flex items-center justify-between">
             <button
               onClick={() => {liked ? onDislike(slug) : onLike(slug); setLiked(!liked)}}
-              className="text-red-500 hover:text-red-600 focus:outline-none focus:ring focus:ring-red-200 rounded-full p-2"
+              className="text-red-500 rounded-full p-2"
               aria-label="Like"
             >
               <svg
@@ -76,41 +78,11 @@ const MusicCard = ({
               {/* Play */}
             </button>
           </div>
+          :<></>}
         </div>
       </div>
     </div>
-
-    /* <div
-      className="group relative bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-all duration-300"
-    >
-      <div className="aspect-square relative">
-        <img
-          src={imageUrl || "/api/placeholder/400/400"}
-          alt={title}
-          className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-        />
-        <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-          <button
-            onClick={onPlay}
-            className="w-12 h-12 bg-indigo-600 rounded-full flex items-center justify-center text-white transform scale-0 group-hover:scale-100 transition-transform duration-300 hover:bg-indigo-700"
-          >
-            <Play className="w-6 h-6" />
-          </button>
-        </div>
-        <button
-          onClick={onLike}
-          className="absolute top-2 right-2 w-8 h-8 bg-white/90 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 hover:bg-white"
-        >
-          <Heart 
-            className= "w-4 h-4 fill-red-500 text-red-500"
-          />
-        </button>
-      </div>
-      <div className="p-4">
-        <h3 className="font-medium text-gray-900 truncate">{title}</h3>
-        <p className="text-sm text-gray-600 truncate">{subtitle}</p>
-      </div>
-    </div> */
+    </div>
     );
 };
 

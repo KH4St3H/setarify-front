@@ -28,13 +28,13 @@ axiosInstance.interceptors.response.use(
 
       const originalRequest = error.config;
 
-      if (error.response && error.response.status === 403 && !originalRequest._retry) {
+      if (error.response && error.response.status === 401 && !originalRequest._retry) {
           originalRequest._retry = true;
 
           try {
             const refreshToken = localStorage.getItem('refreshToken');
              const response = await axios.post(`${BASE_URL}/api/token/refresh/`, {
-                refreshToken
+                refresh: refreshToken,
               });
               if (response) {
                   //update the access token
@@ -66,16 +66,17 @@ const api = {
 
   // Albums
   getAlbums: async () => {
-    const response =await fetch(`${BASE_URL}/api/albums/`, {
-      headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
-    });
-    if (!response.ok) throw new Error('Failed to fetch albums');
-    return response.json();
+    // const response =await fetch(`${BASE_URL}/api/albums/`, {
+    //   headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
+    // });
+    // if (!response.ok) throw new Error('Failed to fetch albums');
+    const response = axiosInstance.get(`${BASE_URL}/api/albums/`).then(res => res.data);
+    return response;
   },
 
   // Songs
-  getSongs: async (query = '') => {
-    const response = axiosInstance.get(`${BASE_URL}/api/songs/?search=${query}`).then(res => res.data);
+  getSongs: async (query = '', key='search') => {
+    const response = axiosInstance.get(`${BASE_URL}/api/songs/?${key}=${query}`).then(res => res.data);
     return response;
   },
 

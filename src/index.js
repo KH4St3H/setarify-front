@@ -8,7 +8,9 @@ import reportWebVitals from './reportWebVitals';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
+    <div className="bg-scroll min-h-screen bg-gray-100">
+      <App />
+    </div>
   </React.StrictMode>
 );
 
