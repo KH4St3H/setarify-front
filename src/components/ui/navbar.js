@@ -34,7 +34,7 @@ const NavBar = ({ searchQuery, setSearchQuery }) => {
                     </div>
                 </div>
             </header>
-            <aside className='fixed left-0 top-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0 bg-white' id='default-sidebar'>
+            <aside className='fixed left-0 top-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0 bg-white' id='default-sidebar' aria-labelledby='asd'>
                 <nav className="space-y-4 mt-20 top-auto text-3xl">
                     {/* <Link to="#" className="flex items-center px-4 py-2 text-gray-700 hover:bg-indigo-50 rounded-lg"> */}
                     <Link to="/" className={`flex items-center px-4 py-2 text-gray-700 hover:bg-indigo-50 rounded-lg ${location.pathname === "/" ? "font-semibold" : ""}`}>

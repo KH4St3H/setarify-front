@@ -180,7 +180,7 @@ const PlayerBar = () => {
   return (
     <footer className="bg-white border-t">
       <div className="max-w-7xl mx-auto px-4 py-4">
-        <div className="flex items-center justify-start">
+        <div className="flex items-center justify-between">
           <div className="flex items-center space-x-4">
             <img
               src={currentSong.cover || '/api/placeholder/48/48'}
@@ -195,7 +195,7 @@ const PlayerBar = () => {
             </div>
           </div>
 
-          <div className="flex flex-col items-center space-y-2 w-1/2">
+          <div className="flex flex-col items-center space-y-2 w-1/2 grow">
             <div className="flex items-center space-x-6">
               <button className="text-gray-500 hover:text-gray-700">
                 <SkipBack className="w-6 h-6" />
