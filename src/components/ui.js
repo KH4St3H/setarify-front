@@ -31,7 +31,7 @@ const MusicCard = ({
           {/* <PlayIcon size={48} className='text-center'>Play</PlayIcon> */}
             {/* Test Button */}
           {/* </button> */}
-            <button
+            <p
               // onClick={onPlay}
               className="mt-10 text-black font-bold py-2 px-4 rounded text-center z-50"
             >
@@ -41,7 +41,7 @@ const MusicCard = ({
                   <PlayIcon size={48} className='text-center'>Play</PlayIcon>
                 )}
               {/* Play */}
-            </button>
+            </p>
         </div>
         </button>
         </div>

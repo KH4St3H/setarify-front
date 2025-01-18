@@ -1,4 +1,4 @@
-import React, { useState, useRef, createContext, useContext, useEffect } from 'react';
+import React, { useState, createContext, useContext } from 'react';
 import {api} from "../api"
 
 const AuthContext = createContext(null);
@@ -70,13 +70,5 @@ const Login = () => {
     </div>
   );
 };
-
-const LoginPage = () => {
-    return (
-        <AuthProvider>        
-            <Login />
-        </AuthProvider>
-    );
-}
 
 export {Login, AuthProvider, AuthContext};

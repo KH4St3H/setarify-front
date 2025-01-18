@@ -1,8 +1,8 @@
 import React from 'react';
 import { SongList, AudioProvider, PlayerBar } from './songs';
 import { api } from "../api"
-import { useQuery, QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { BrowserRouter, Routes, Route, Outlet, useParams } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
+import {  useParams } from 'react-router-dom';
 
 
 const Album = () => {
