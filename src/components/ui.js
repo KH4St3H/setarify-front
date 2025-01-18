@@ -51,7 +51,7 @@ const MusicCard = ({
             <h3 className="text-lg font-semibold text-gray-800 truncate shrink">
               <Link to={`/albums/${slug}`}>{title}</Link>
             </h3>
-            <div className='flex items-center flex-row content-center w-max'>
+            <div className='flex items-center flex-row content-center w-full'>
               <p className="text-sm text-gray-600 mt-1 truncate">{subtitle}</p>
               {onPlay !== null ?
                 <div className="flex justify-end grow">
@@ -95,7 +95,7 @@ const HorizontalMusicCard = ({
   className
 }) => {
   return (
-    <div 
+    <div
       className="group relative bg-white rounded-lg shadow-sm overflow-hidden hover:bg-gray-50 transition-colors duration-200"
     >
       <div className="flex items-center p-3 gap-4">
@@ -122,8 +122,8 @@ const HorizontalMusicCard = ({
             onClick={onLike}
             className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100"
           >
-            <Heart 
-              className= "w-4 h-4 text-gray-600"
+            <Heart
+              className="w-4 h-4 text-gray-600"
             />
           </button>
         </div>
