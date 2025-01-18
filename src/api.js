@@ -66,14 +66,14 @@ const api = {
 
   // Albums
   getAlbums: async () => {
-    // const response =await fetch(`${BASE_URL}/api/albums/`, {
-    //   headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
-    // });
-    // if (!response.ok) throw new Error('Failed to fetch albums');
     const response = axiosInstance.get(`${BASE_URL}/api/albums/`).then(res => res.data);
     return response;
   },
 
+  getArtists: async () => {
+    const response = axiosInstance.get(`${BASE_URL}/api/artists/`).then(res => res.data);
+    return response;
+  },
   // Songs
   getSongs: async (query = '', key='search') => {
     const response = axiosInstance.get(`${BASE_URL}/api/songs/?${key}=${query}`).then(res => res.data);

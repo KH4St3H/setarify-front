@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import * as SliderPrimitive from '@radix-ui/react-slider';
-import { Heart, Play } from 'lucide-react';
+import { Heart, PauseIcon, Play, PlayIcon } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 // Card component with hover effects and play button
@@ -18,70 +18,67 @@ const MusicCard = ({
   const [liked, setLiked] = useState(isLiked);
   return (
     <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
-      <div>
-      <img
-        src={imageUrl || "/api/placeholder/400/400"}
-        alt={title}
-        className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-      />
-      <div className="p-4">
-        <div className="flex items-start justify-between">
+        <div className='relative text-center'>
+        <button onClick={onPlay}>
+          <img
+            src={imageUrl || "/api/placeholder/400/400"}
+            alt={title}
+            className="w-full h-full object-cover duration-300 group-hover:scale-105 hover:opacity-85 transition-opacity"
+          />
+        <div className="absolute inset-0 z-0 bg-white text-center flex flex-col items-center justify-center opacity-0 hover:opacity-100 bg-opacity-90 duration-300">
 
-          <div>
-          <h3 className="text-lg font-semibold text-gray-800 truncate">
-            <Link to={`/albums/${slug}`}>{title}</Link>
-          </h3>
-          <p className="text-sm text-gray-600 mt-1 truncate">{subtitle}</p>
-          </div>
-
-          {onPlay !== null ?
-          <div className="mt-4 flex items-center justify-between">
+          {/* <button className="mt-10 text-black font-bold py-2 px-4 rounded text-center z-50"> */}
+          {/* <PlayIcon size={48} className='text-center'>Play</PlayIcon> */}
+            {/* Test Button */}
+          {/* </button> */}
             <button
-              onClick={() => {liked ? onDislike(slug) : onLike(slug); setLiked(!liked)}}
-              className="text-red-500 rounded-full p-2"
-              aria-label="Like"
+              // onClick={onPlay}
+              className="mt-10 text-black font-bold py-2 px-4 rounded text-center z-50"
             >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="currentColor"
-                viewBox="0 0 24 24"
-                className="w-6 h-6"
-              >
-                {/* <path d="M12 21.35C10.55 20.03 7.55 17.36 5.4 15.36C2 12.28 2 8.5 2 8.5C2 6.42 3.42 5 5.5 5C7.54 5 9.04 6.42 9.57 7.78C10.1 9.14 11 10.5 11 10.5C11 10.5 13 8.36 14.46 7.78C15.92 7.21 17.5 5 17.5 5C19.58 5 21 6.42 21 8.5C21 12.28 17.6 15.36 14.45 17.36C11.3 19.36 12 21.35 12 21.35Z" /> */}
-                <path d="M12.1 21.35l-1.1-1.05C5.14 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.14 6.86-8.9 11.8l-1.1 1.05z" stroke="currentColor" strokeWidth="2" fill={liked ? "red" : "white"} />
-
-                {/* {isLiked ? (
-                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 6.42 3.42 5 5.5 5c1.54 0 3.04.99 3.57 2.36h1.87C14.46 5.99 15.96 5 17.5 5 19.58 5 21 6.42 21 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
-              ) : (
-              )} */}
-
-              </svg>
-            </button>
-
-            <button
-              onClick={onPlay}
-              className="bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded-lg focus:outline-none focus:ring focus:ring-blue-300"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="gray"
-                viewBox="0 0 24 24"
-                className="w-5 h-5 mr-2"
-              >
                 {isPlaying ? (
-                  <path d="M6 4h4v16H6zM14 4h4v16h-4z" />
+                  <PauseIcon size={48} className='text-center'>Pause</PauseIcon>
                 ) : (
-                  <path d="M8 5v14l11-7z" />
+                  <PlayIcon size={48} className='text-center'>Play</PlayIcon>
                 )}
-                {isPlaying ? "Pause" : "Play"}
-              </svg>
               {/* Play */}
             </button>
+        </div>
+        </button>
+        </div>
+      <div className="p-4">
+        <div className="flex items-start justify-between">
+          <div className='w-full'>
+            <h3 className="text-lg font-semibold text-gray-800 truncate shrink">
+              <Link to={`/albums/${slug}`}>{title}</Link>
+            </h3>
+            <div className='flex items-center flex-row content-center w-max'>
+              <p className="text-sm text-gray-600 mt-1 truncate">{subtitle}</p>
+              {onPlay !== null ?
+                <div className="flex justify-end grow">
+                  <button
+                    onClick={() => { liked ? onDislike(slug) : onLike(slug); setLiked(!liked) }}
+                    className="text-red-500 rounded-full p-2"
+                    aria-label="Like"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="currentColor"
+                      viewBox="0 0 24 24"
+                      className="w-6 h-6"
+                    >
+                      <path d="M12.1 21.35l-1.1-1.05C5.14 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.14 6.86-8.9 11.8l-1.1 1.05z" stroke="currentColor" strokeWidth="2" fill={liked ? "red" : "white"} />
+                    </svg>
+                  </button>
+
+
+                </div>
+                : <></>}
+
+            </div>
           </div>
-          :<></>}
+
         </div>
       </div>
-    </div>
     </div>
     );
 };

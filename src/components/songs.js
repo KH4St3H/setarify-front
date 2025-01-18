@@ -1,10 +1,10 @@
 import React, { useState, useRef, createContext, useContext, useEffect } from 'react';
-import { useQuery, useMutation, QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { Layout, Search, Home, Library, PlayCircle, PauseCircle, SkipBack, SkipForward, Heart, Volume2, VolumeX } from 'lucide-react';
+import { PlayCircle, PauseCircle, SkipBack, SkipForward, Volume2, VolumeX } from 'lucide-react';
 import {api} from "../api"
-import { MusicCard as Card, SliderPrimitive} from './ui';
+import { MusicCard as Card } from './ui';
 
 import Slider from '@mui/material/Slider';
+import { Link } from 'react-router-dom';
 
 const AudioContext = createContext(null);
 
@@ -112,7 +112,7 @@ const ProgressBar = () => {
   };
 
   return (
-    <div className="flex items-center space-x-30">
+    <div className="flex items-center space-x-7 min-w-full">
       <span className="text-sm text-gray-500">{formatTime(currentTime)}</span>
       <Slider
           aria-label="time-indicator"
@@ -122,7 +122,6 @@ const ProgressBar = () => {
           step={1}
           max={duration}
           onChange={(_, value) => seek(value)}
-          style={{width: 300}}
         />
       {/* <Slider
         value={[Math.floor(currentTime ? currentTime : 0)]}
@@ -147,7 +146,8 @@ const SongList = ({ songs }) => {
             key={song.slug}
             slug={song.slug}
             title={song.title}
-            subtitle={song.artist.map(a => a.name).join(', ')}
+            // subtitle={song.artist.map(a => a.name).join(', ')}
+            subtitle={song.artist.map(a => <Link to={`/artists/${a.slug}`}>{a.name}</Link>)}
             isLiked={song.liked}
             imageUrl={song.cover}
             onPlay={() => playSong(song)}
@@ -180,7 +180,7 @@ const PlayerBar = () => {
   return (
     <footer className="bg-white border-t">
       <div className="max-w-7xl mx-auto px-4 py-4">
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-start">
           <div className="flex items-center space-x-4">
             <img
               src={currentSong.cover || '/api/placeholder/48/48'}
@@ -195,7 +195,7 @@ const PlayerBar = () => {
             </div>
           </div>
 
-          <div className="flex flex-col items-center space-y-2">
+          <div className="flex flex-col items-center space-y-2 w-1/2">
             <div className="flex items-center space-x-6">
               <button className="text-gray-500 hover:text-gray-700">
                 <SkipBack className="w-6 h-6" />
@@ -217,7 +217,7 @@ const PlayerBar = () => {
             <ProgressBar />
           </div>
 
-          <div className="flex items-center space-x-4">
+          {/* <div className="items-center space-x-4 hidden sm:flex w-1/5 ">
             <button onClick={toggleMute} className="text-gray-500 hover:text-gray-700">
               {isMuted ? <VolumeX className="w-6 h-6" /> : <Volume2 className="w-6 h-6" />}
             </button>
@@ -227,7 +227,7 @@ const PlayerBar = () => {
               className="w-24"
               onChange={(value) => adjustVolume(value[0] / 100)}
             />
-          </div>
+          </div> */}
         </div>
       </div>
     </footer>

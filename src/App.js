@@ -7,6 +7,7 @@ import { NavBar } from './components/ui/navbar';
 import { api } from "./api"
 import { useQuery, QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { BrowserRouter, Routes, Route, Outlet } from 'react-router-dom';
+import { Artist, Artists } from './components/artists';
 
 const queryClient = new QueryClient();
 
@@ -52,6 +53,31 @@ const Albums = () => {
   );
 }
 
+const RoutedApp = () => {
+  const [searchQuery, setSearchQuery] = useState('');
+  return (
+    <QueryClientProvider client={queryClient}>
+      <BrowserRouter>
+        {/* <NavBar setSearchQuery={setSearchQuery} searchQuery={searchQuery} /> */}
+        <Routes >
+          <Route element={<><NavBar setSearchQuery={setSearchQuery} searchQuery={searchQuery} /> <Outlet /></>}>
+            <Route path="/" element={<AuthProvider><Home searchQuery={searchQuery} /></AuthProvider>} />
+            <Route path="albums">
+              <Route index element={<Albums />} />
+              <Route path=':slug' element={<Album />} />
+            </Route>
+            <Route path="artists">
+              <Route index element={<Artists />} />
+              <Route path=':slug' element={<Artist />} />
+            </Route>
+          </Route>
+        </Routes>
+      </BrowserRouter>
+    </QueryClientProvider>
+  );
+};
+
+
 // Root App Component remains the same
 const AppPage = ({searchQuery}) => {
   const { isAuthenticated } = useContext(AuthContext);
@@ -60,41 +86,30 @@ const AppPage = ({searchQuery}) => {
   return (
     <>
       {isAuthenticated ? (
-        <Home searchQuery={searchQuery} />
+        <RoutedApp />
       ) : (
         <Login />
       )}
     </>
   );
 }
-// const MainPage = () => {
-//   return (
-//     <QueryClientProvider client={queryClient}>
-//       <AuthProvider>
-//        <AppPage />
-//       </AuthProvider>
-//     </QueryClientProvider>
-//   );
-// };
-
-const App = () => {
-  const [searchQuery, setSearchQuery] = useState('');
+const MainPage = () => {
+  // const [searchQuery, setSearchQuery] = useState('');
   return (
     <QueryClientProvider client={queryClient}>
-      <BrowserRouter>
-        {/* <NavBar setSearchQuery={setSearchQuery} searchQuery={searchQuery} /> */}
-        <Routes >
-          <Route element={<><NavBar setSearchQuery={setSearchQuery} searchQuery={searchQuery} /> <Outlet /></>}>
-            <Route path="/" element={<AuthProvider><AppPage searchQuery={searchQuery} /></AuthProvider>} />
-            <Route path="albums">
-              <Route index element={<Albums />} />
-              <Route path=':slug' element={<Album />} />
-
-            </Route>
-          </Route>
-        </Routes>
-      </BrowserRouter>
+      <AuthProvider>
+       <AppPage />
+      </AuthProvider>
     </QueryClientProvider>
+  );
+};
+
+const App = () => {
+  return (
+    <><MainPage /></>
+    // <QueryClientProvider client={queryClient}>
+      
+    // </QueryClientProvider>
   );
 };
 

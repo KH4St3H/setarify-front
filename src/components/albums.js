@@ -1,5 +1,6 @@
 import React from 'react';
 import { MusicCard as Card} from './ui';
+import { Link } from 'react-router-dom';
 
 
 
@@ -14,9 +15,9 @@ const AlbumList = ({ albums }) => {
             key={album.slug}
             slug={album.slug}
             title={album.title}
-            subtitle={album.artist.map(a => a.name).join(', ')}
+            subtitle={album.artist.map(a => <Link to={`/artists/${a.slug}`}>{a.name}</Link>)}
             // isLiked={album.liked}
-            imageUrl={album.cover !== null ? album.cover : ''}
+            imageUrl={album.cover !== null ? album.cover : `${process.env.PUBLIC_URL}/Unknown_person.jpg`}
             // onPlay={() => playalbum(album)}
             // onLike={api.likealbum}
             // onDislike={api.dislikeSong}

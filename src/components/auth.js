@@ -12,6 +12,7 @@ const AuthProvider = ({ children }) => {
   });
 
   const login = async (credentials) => {
+    console.log(credentials);
     const response = await api.login(credentials);
     localStorage.setItem('accessToken', response.access);
     localStorage.setItem('refreshToken', response.refresh);
@@ -45,7 +46,7 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
+    <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
         <h2 className="text-2xl font-bold mb-4">Login to Setarify</h2>
         <form onSubmit={handleSubmit} className="space-y-4">
           <input
