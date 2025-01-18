@@ -37,7 +37,7 @@ const NavBar = ({ searchQuery, setSearchQuery }) => {
                 </div>
             </header>
             <div className={`${open?'translate-x-0':''} fixed left-0 top-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0 bg-white`} id='default-sidebar' aria-labelledby='lll' tabIndex={-1}>
-                <nav className="space-y-4 mt-32 top-auto text-3xl" id="lll">
+                <nav className="space-y-4 mt-32 top-auto text-2xl" id="lll">
                     {/* <Link to="#" className="flex items-center px-4 py-2 text-gray-700 hover:bg-indigo-50 rounded-lg"> */}
                     <Link to="/" className={`flex items-center px-4 py-2 text-gray-700 hover:bg-indigo-50 rounded-lg ${location.pathname === "/" ? "font-semibold" : ""}`}>
                         Home
@@ -51,7 +51,7 @@ const NavBar = ({ searchQuery, setSearchQuery }) => {
                 </nav>
                 {/* Playlists */}
                 <div className="mt-8">
-                    <h3 className="px-4 font-semibold text-gray-500 uppercase tracking-wider text-3xl">
+                    <h3 className="px-4 font-semibold text-gray-500 uppercase tracking-wider text-2xl">
                         Playlists
                     </h3>
                 </div>
