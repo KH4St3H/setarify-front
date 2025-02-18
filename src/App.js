@@ -14,7 +14,7 @@ const queryClient = new QueryClient();
 const Home = ({searchQuery}) => {
   const { data: songs } = useQuery({ queryKey: ['songs', searchQuery], queryFn: () => api.getSongs(searchQuery) });
   return (
-    <AudioProvider>
+  <>
         <div class="p-4 sm:ml-64">
           <div className="container mx-auto p-4">
             {songs && (
@@ -26,8 +26,8 @@ const Home = ({searchQuery}) => {
         <footer className='mx-auto sticky bottom-0 sm:ml-64'>
           <PlayerBar></PlayerBar>
         </footer>
+  </>
 
-    </AudioProvider>
   );
 }
 
@@ -36,7 +36,7 @@ const Albums = () => {
   const { data: albums } = useQuery({ queryKey: ['songs', ""], queryFn: () => api.getAlbums("") });
   console.log(albums);
   return (
-    <AudioProvider>
+    <>
         <div class="p-4 sm:ml-64">
           <div className="container mx-auto p-4">
             {albums && (
@@ -49,7 +49,7 @@ const Albums = () => {
           <PlayerBar></PlayerBar>
         </footer>
 
-    </AudioProvider>
+    </>
   );
 }
 
@@ -86,7 +86,9 @@ const AppPage = ({searchQuery}) => {
   return (
     <>
       {isAuthenticated ? (
+        <AudioProvider>
         <RoutedApp />
+        </AudioProvider>
       ) : (
         <Login />
       )}
@@ -108,7 +110,7 @@ const App = () => {
   return (
     <><MainPage /></>
     // <QueryClientProvider client={queryClient}>
-      
+
     // </QueryClientProvider>
   );
 };

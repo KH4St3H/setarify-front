@@ -4,10 +4,10 @@ import { api } from "../api"
 import { useQuery } from '@tanstack/react-query';
 import { useParams, Link } from 'react-router-dom';
 
-const ArtistCard = ({ 
-  title=null, 
-  subtitle=null, 
-  imageUrl=null, 
+const ArtistCard = ({
+  title=null,
+  subtitle=null,
+  imageUrl=null,
   isLiked=false,
   isPlaying=false,
   slug=null
@@ -89,7 +89,7 @@ const Artist = () => {
     let params = useParams();
     const { data: songs } = useQuery({ queryKey: ['artist', params.slug], queryFn: () => api.getSongs(params.slug, 'artist') });
     return (
-        <AudioProvider>
+        <>
             <div class="p-4 sm:ml-64">
                 <div className="container mx-auto p-4">
                     {songs && (
@@ -102,7 +102,7 @@ const Artist = () => {
                 <PlayerBar></PlayerBar>
             </footer>
 
-        </AudioProvider>
+        </>
     );
 }
 
