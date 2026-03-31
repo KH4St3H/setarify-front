@@ -1,5 +1,5 @@
 import React, { useState, useRef, createContext, useContext, useEffect } from 'react';
-import { PlayCircle, PauseCircle, SkipBack, SkipForward, Volume2, VolumeX } from 'lucide-react';
+import { PlayCircle, PauseCircle, SkipBack, SkipForward } from 'lucide-react';
 import {api} from "../api"
 import { MusicCard as Card } from './ui';
 
@@ -165,14 +165,10 @@ const SongList = ({ songs }) => {
 
 // Updated Player Bar Component
 const PlayerBar = () => {
-  const { 
+  const {
     currentSong,
     isPlaying,
     togglePlay,
-    volume,
-    isMuted,
-    toggleMute,
-    adjustVolume
   } = useContext(AudioContext);
 
   if (!currentSong) return null;

@@ -95,11 +95,11 @@ const api = {
   },
 
   likeSong: async (slug) => {
-    const response = await axiosInstance.get(`${BASE_URL}/api/songs/${slug}/like/`).then(r => r.data).catch(() => {throw new Error('Failed')});
+    await axiosInstance.get(`${BASE_URL}/api/songs/${slug}/like/`).catch(() => {throw new Error('Failed')});
     return true;
   },
   dislikeSong: async (slug) => {
-    const response = await axiosInstance.get(`${BASE_URL}/api/songs/${slug}/dislike/`).then(r => r.data).catch(() => {throw new Error('Failed')});
+    await axiosInstance.get(`${BASE_URL}/api/songs/${slug}/dislike/`).catch(() => {throw new Error('Failed')});
     return {"ok": true};
   },
 };
