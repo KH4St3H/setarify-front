@@ -1,5 +1,5 @@
-import React, { useState, useContext } from 'react';
-import { Login, AuthProvider, AuthContext } from './components/auth';
+import React, { useState } from 'react';
+import { AuthProvider } from './components/auth';
 import { SongList, AudioProvider, PlayerBar } from './components/songs';
 import { AlbumList } from './components/albums';
 import { Album } from './components/album';
@@ -79,20 +79,11 @@ const RoutedApp = () => {
 
 
 // Root App Component remains the same
-const AppPage = ({searchQuery}) => {
-  const { isAuthenticated } = useContext(AuthContext);
-  console.log("authenticated:");
-  console.log(isAuthenticated);
+const AppPage = () => {
   return (
-    <>
-      {isAuthenticated ? (
-        <AudioProvider>
-        <RoutedApp />
-        </AudioProvider>
-      ) : (
-        <Login />
-      )}
-    </>
+    <AudioProvider>
+      <RoutedApp />
+    </AudioProvider>
   );
 }
 const MainPage = () => {
