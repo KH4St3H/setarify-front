@@ -75,8 +75,8 @@ const api = {
     return response;
   },
   // Songs
-  getSongs: async (query = '', key='search') => {
-    const response = axiosInstance.get(`${BASE_URL}/api/songs/?${key}=${query}`).then(res => res.data);
+  getSongs: async (query = '', key='search', page = 1) => {
+    const response = axiosInstance.get(`${BASE_URL}/api/songs/?${key}=${query}&page=${page}`).then(res => res.data);
     return response;
   },
 
