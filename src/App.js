@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { AuthProvider } from './components/auth';
+import { AuthProvider, Login } from './components/auth';
 import { SongList, AudioProvider, PlayerBar } from './components/songs';
 import { AlbumList } from './components/albums';
 import { Album } from './components/album';
@@ -85,7 +85,8 @@ const RoutedApp = () => {
         {/* <NavBar setSearchQuery={setSearchQuery} searchQuery={searchQuery} /> */}
         <Routes >
           <Route element={<><NavBar setSearchQuery={setSearchQuery} searchQuery={searchQuery} /> <Outlet /></>}>
-            <Route path="/" element={<AuthProvider><Home searchQuery={searchQuery} /></AuthProvider>} />
+            <Route path="/" element={<Home searchQuery={searchQuery} />} />
+            <Route path="login" element={<Login />} />
             <Route path="albums">
               <Route index element={<Albums />} />
               <Route path=':slug' element={<Album />} />

@@ -1,10 +1,12 @@
-import { Layout, Search } from 'lucide-react';
-import { useState } from 'react';
+import { Layout, Search, LogIn, LogOut } from 'lucide-react';
+import { useState, useContext } from 'react';
 import { useLocation, Link } from 'react-router-dom';
+import { AuthContext } from '../auth';
 
 const NavBar = ({ searchQuery, setSearchQuery }) => {
     let location = useLocation();
     const [open, setOpen] = useState(false);
+    const { isAuthenticated, logout } = useContext(AuthContext);
     return (
         <>
 
@@ -34,6 +36,15 @@ const NavBar = ({ searchQuery, setSearchQuery }) => {
                             />
                         </div>
                     </div>
+                    {isAuthenticated ? (
+                        <button onClick={logout} className="flex items-center space-x-1 text-gray-600 hover:text-indigo-600">
+                            <LogOut className="w-5 h-5" />
+                        </button>
+                    ) : (
+                        <Link to="/login" className="flex items-center space-x-1 text-gray-600 hover:text-indigo-600">
+                            <LogIn className="w-5 h-5" />
+                        </Link>
+                    )}
                 </div>
             </header>
             <div className={`${open?'translate-x-0':''} fixed left-0 top-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0 bg-white`} id='default-sidebar' aria-labelledby='lll' tabIndex={-1}>
