@@ -66,7 +66,7 @@ const ArtistList = ({ artists }) => {
 
 const Artists = () => {
     // let params = useParams();
-    const { data: artists } = useQuery({ queryKey: [], queryFn: () => api.getArtists() });
+    const { data: artists } = useQuery({ queryKey: ['artists'], queryFn: () => api.getArtists() });
     return (
         <AudioProvider>
             <div class="p-4 sm:ml-64">
@@ -87,12 +87,13 @@ const Artists = () => {
 
 const Artist = () => {
     let params = useParams();
-    const { data: songs } = useQuery({ queryKey: ['artist', params.slug], queryFn: () => api.getSongs(params.slug, 'artist') });
+    const { data } = useQuery({ queryKey: ['artist', params.slug], queryFn: () => api.getSongs(params.slug, 'artist') });
+    const songs = data?.results ?? [];
     return (
         <>
             <div class="p-4 sm:ml-64">
                 <div className="container mx-auto p-4">
-                    {songs && (
+                    {songs.length > 0 && (
                         <SongList songs={songs} />
                     )}
                 </div>

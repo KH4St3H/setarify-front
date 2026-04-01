@@ -8,12 +8,13 @@ import {  useParams } from 'react-router-dom';
 const Album = () => {
     let params = useParams();
     console.log(params);
-    const { data: songs } = useQuery({ queryKey: ['album', params.slug], queryFn: () => api.getSongs(params.slug, 'album') });
+    const { data } = useQuery({ queryKey: ['album', params.slug], queryFn: () => api.getSongs(params.slug, 'album') });
+    const songs = data?.results ?? [];
     return (
         <AudioProvider>
             <div class="p-4 sm:ml-64">
                 <div className="container mx-auto p-4">
-                    {songs && (
+                    {songs.length > 0 && (
                         <SongList songs={songs} />
                     )}
                 </div>
