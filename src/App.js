@@ -56,9 +56,7 @@ const Home = ({searchQuery}) => {
 }
 
 const Albums = () => {
-  // const { data: albums } = api.getAlbums();
-  const { data: albums } = useQuery({ queryKey: ['songs', ""], queryFn: () => api.getAlbums("") });
-  console.log(albums);
+  const { data: albums } = useQuery({ queryKey: ['albums'], queryFn: () => api.getAlbums() });
   return (
     <>
         <div class="p-4 sm:ml-64">
