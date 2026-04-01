@@ -11,7 +11,7 @@ const AudioContext = createContext(null);
 // Audio Provider Component
 const AudioProvider = ({ children }) => {
   const audioRef = useRef(new Audio());
-  const [currentSong, setCurrentSong] = useState({title: "null", cover: null, artist: [{name: null}]});
+  const [currentSong, setCurrentSong] = useState(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [duration, setDuration] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
