@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { SongList, AudioProvider, PlayerBar } from './songs';
 import { api } from "../api"
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useInfiniteQuery } from '@tanstack/react-query';
 import { useParams, Link } from 'react-router-dom';
 
 const ArtistCard = ({
@@ -65,22 +65,43 @@ const ArtistList = ({ artists }) => {
 };
 
 const Artists = () => {
-    // let params = useParams();
-    const { data: artists } = useQuery({ queryKey: ['artists'], queryFn: () => api.getArtists() });
+    const sentinelRef = useRef(null);
+    const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = useInfiniteQuery({
+        queryKey: ['artists'],
+        queryFn: ({ pageParam = 1 }) => api.getArtists(pageParam),
+        getNextPageParam: (lastPage) => {
+            if (!lastPage.next) return undefined;
+            return new URL(lastPage.next).searchParams.get('page');
+        },
+    });
+
+    useEffect(() => {
+        const sentinel = sentinelRef.current;
+        if (!sentinel) return;
+        const observer = new IntersectionObserver(
+            (entries) => { if (entries[0].isIntersecting && hasNextPage) fetchNextPage(); },
+            { threshold: 0.1 }
+        );
+        observer.observe(sentinel);
+        return () => observer.disconnect();
+    }, [hasNextPage, fetchNextPage]);
+
+    const artists = data?.pages.flatMap(page => page.results) ?? [];
+
     return (
         <AudioProvider>
             <div class="p-4 sm:ml-64">
                 <div className="container mx-auto p-4">
-                    {artists && (
-                        <ArtistList artists={artists} />
-                    )}
+                    <ArtistList artists={artists} />
+                    <div ref={sentinelRef} className="h-10 flex items-center justify-center">
+                        {isFetchingNextPage && <span className="text-gray-400 text-sm">Loading...</span>}
+                    </div>
                 </div>
             </div>
             <div className='h-screen'></div>
             <footer className='mx-auto sticky bottom-0 sm:ml-64'>
                 <PlayerBar></PlayerBar>
             </footer>
-
         </AudioProvider>
     );
 }

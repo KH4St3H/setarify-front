@@ -5,7 +5,7 @@ import { AlbumList } from './components/albums';
 import { Album } from './components/album';
 import { NavBar } from './components/ui/navbar';
 import { api } from "./api"
-import { useInfiniteQuery, useQuery, QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { useInfiniteQuery, QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { BrowserRouter, Routes, Route, Outlet } from 'react-router-dom';
 import { Artist, Artists } from './components/artists';
 
@@ -56,21 +56,43 @@ const Home = ({searchQuery}) => {
 }
 
 const Albums = () => {
-  const { data: albums } = useQuery({ queryKey: ['albums'], queryFn: () => api.getAlbums() });
+  const sentinelRef = useRef(null);
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = useInfiniteQuery({
+    queryKey: ['albums'],
+    queryFn: ({ pageParam = 1 }) => api.getAlbums(pageParam),
+    getNextPageParam: (lastPage) => {
+      if (!lastPage.next) return undefined;
+      return new URL(lastPage.next).searchParams.get('page');
+    },
+  });
+
+  useEffect(() => {
+    const sentinel = sentinelRef.current;
+    if (!sentinel) return;
+    const observer = new IntersectionObserver(
+      (entries) => { if (entries[0].isIntersecting && hasNextPage) fetchNextPage(); },
+      { threshold: 0.1 }
+    );
+    observer.observe(sentinel);
+    return () => observer.disconnect();
+  }, [hasNextPage, fetchNextPage]);
+
+  const albums = data?.pages.flatMap(page => page.results) ?? [];
+
   return (
     <>
         <div class="p-4 sm:ml-64">
           <div className="container mx-auto p-4">
-            {albums && (
-              <AlbumList albums={albums} />
-            )}
+            <AlbumList albums={albums} />
+            <div ref={sentinelRef} className="h-10 flex items-center justify-center">
+              {isFetchingNextPage && <span className="text-gray-400 text-sm">Loading...</span>}
+            </div>
           </div>
         </div>
         <div className='h-screen'></div>
         <footer className='mx-auto sticky bottom-0 sm:ml-64'>
           <PlayerBar></PlayerBar>
         </footer>
-
     </>
   );
 }

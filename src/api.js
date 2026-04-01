@@ -65,13 +65,13 @@ const api = {
   },
 
   // Albums
-  getAlbums: async () => {
-    const response = axiosInstance.get(`${BASE_URL}/api/albums/`).then(res => res.data);
+  getAlbums: async (page = 1) => {
+    const response = axiosInstance.get(`${BASE_URL}/api/albums/?page=${page}`).then(res => res.data);
     return response;
   },
 
-  getArtists: async () => {
-    const response = axiosInstance.get(`${BASE_URL}/api/artists/`).then(res => res.data);
+  getArtists: async (page = 1) => {
+    const response = axiosInstance.get(`${BASE_URL}/api/artists/?page=${page}`).then(res => res.data);
     return response;
   },
   // Songs
