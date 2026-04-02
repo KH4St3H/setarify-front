@@ -68,7 +68,8 @@ const Artists = () => {
     const sentinelRef = useRef(null);
     const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = useInfiniteQuery({
         queryKey: ['artists'],
-        queryFn: ({ pageParam = 1 }) => api.getArtists(pageParam),
+        queryFn: ({ pageParam }) => api.getArtists(pageParam),
+        initialPageParam: 1,
         getNextPageParam: (lastPage) => {
             if (!lastPage.next) return undefined;
             return new URL(lastPage.next).searchParams.get('page');
@@ -112,7 +113,8 @@ const Artist = () => {
 
     const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = useInfiniteQuery({
         queryKey: ['artist', params.slug],
-        queryFn: ({ pageParam = 1 }) => api.getSongs(params.slug, 'artist', pageParam),
+        queryFn: ({ pageParam }) => api.getSongs(params.slug, 'artist', pageParam),
+        initialPageParam: 1,
         getNextPageParam: (lastPage) => {
             if (!lastPage.next) return undefined;
             return new URL(lastPage.next).searchParams.get('page');

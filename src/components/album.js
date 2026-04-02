@@ -11,7 +11,8 @@ const Album = () => {
 
     const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = useInfiniteQuery({
         queryKey: ['album', params.slug],
-        queryFn: ({ pageParam = 1 }) => api.getSongs(params.slug, 'album', pageParam),
+        queryFn: ({ pageParam }) => api.getSongs(params.slug, 'album', pageParam),
+        initialPageParam: 1,
         getNextPageParam: (lastPage) => {
             if (!lastPage.next) return undefined;
             return new URL(lastPage.next).searchParams.get('page');

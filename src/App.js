@@ -16,7 +16,8 @@ const Home = ({searchQuery}) => {
 
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = useInfiniteQuery({
     queryKey: ['songs', searchQuery],
-    queryFn: ({ pageParam = 1 }) => api.getSongs(searchQuery, 'search', pageParam),
+    queryFn: ({ pageParam }) => api.getSongs(searchQuery, 'search', pageParam),
+    initialPageParam: 1,
     getNextPageParam: (lastPage) => {
       if (!lastPage.next) return undefined;
       const url = new URL(lastPage.next);
@@ -59,7 +60,8 @@ const Albums = () => {
   const sentinelRef = useRef(null);
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = useInfiniteQuery({
     queryKey: ['albums'],
-    queryFn: ({ pageParam = 1 }) => api.getAlbums(pageParam),
+    queryFn: ({ pageParam }) => api.getAlbums(pageParam),
+    initialPageParam: 1,
     getNextPageParam: (lastPage) => {
       if (!lastPage.next) return undefined;
       return new URL(lastPage.next).searchParams.get('page');
